@@ -1,7 +1,7 @@
 --[[
 Minetest Mod Storage Drawers - A Mod adding storage drawers
 
-Copyright (C) 2017-2019 Linus Jahn <lnj@kaidan.im>
+Copyright (C) 2017-2020 Linus Jahn <lnj@kaidan.im>
 
 MIT License
 
@@ -276,9 +276,9 @@ if core.get_modpath("default") and default then
 	})
 
 	drawers.register_drawer_upgrade("drawers:upgrade_obsidian", {
-		description = S("Obsidian Drawer Upgrade (x5)"),
+		description = S("Obsidian Drawer Upgrade (x4)"),
 		inventory_image = "drawers_upgrade_obsidian.png",
-		groups = {drawer_upgrade = 400},
+		groups = {drawer_upgrade = 300},
 		recipe_item = "default:obsidian"
 	})
 
@@ -304,9 +304,9 @@ elseif core.get_modpath("mcl_core") and mcl_core then
 	})
 
 	drawers.register_drawer_upgrade("drawers:upgrade_obsidian", {
-		description = S("Obsidian Drawer Upgrade (x5)"),
+		description = S("Obsidian Drawer Upgrade (x4)"),
 		inventory_image = "drawers_upgrade_obsidian.png",
-		groups = {drawer_upgrade = 400},
+		groups = {drawer_upgrade = 300},
 		recipe_item = "mcl_core:obsidian"
 	})
 
@@ -322,6 +322,15 @@ elseif core.get_modpath("mcl_core") and mcl_core then
 		inventory_image = "drawers_upgrade_emerald.png",
 		groups = {drawer_upgrade = 1200},
 		recipe_item = "mcl_core:emerald"
+	})
+end
+
+if core.get_modpath("moreores") then
+	drawers.register_drawer_upgrade("drawers:upgrade_mithril", {
+		description = S("Mithril Drawer Upgrade (x13)"),
+		inventory_image = "drawers_upgrade_mithril.png",
+		groups = {drawer_upgrade = 1200},
+		recipe_item = "moreores:mithril_ingot"
 	})
 end
 

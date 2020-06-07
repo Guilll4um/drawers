@@ -100,7 +100,7 @@ core.register_entity("drawers:visual", {
 		self.meta = core.get_meta(self.drawer_pos)
 
 		-- collisionbox
-		local node = core.get_node(self.drawer_pos)
+		node = core.get_node(self.drawer_pos)
 		local colbox
 		if self.drawerType ~= 2 then
 			if node.param2 == 1 or node.param2 == 3 then
@@ -170,7 +170,7 @@ core.register_entity("drawers:visual", {
 			local i = 0
 			local inv = clicker:get_inventory()
 
-			while i < inv:get_size("main") do
+			while i <= inv:get_size("main") do
 				-- set current stack to leftover of insertion
 				local leftover = self.try_insert_stack(
 					self,
@@ -221,7 +221,7 @@ core.register_entity("drawers:visual", {
 		end
 		local inv = puncher:get_inventory()
 		if inv == nil then
-			return	
+			return
 		end
 		local spaceChecker = ItemStack(self.itemName)
 		if add_stack then
@@ -231,7 +231,13 @@ core.register_entity("drawers:visual", {
 			return
 		end
 
-		stack = self:take_items(add_stack)
+		local stack
+		if add_stack then
+			stack = self:take_stack()
+		else
+			stack = self:take_items(1)
+		end
+
 		if stack ~= nil then
 			-- add removed stack to player's inventory
 			inv:add_item("main", stack)
@@ -241,17 +247,13 @@ core.register_entity("drawers:visual", {
 		end
 	end,
 
-	take_items = function(self, take_stack)
+	take_items = function(self, removeCount)
 		local meta = core.get_meta(self.drawer_pos)
 
 		if self.count <= 0 then
 			return
 		end
 
-		local removeCount = 1
-		if take_stack then
-			removeCount = ItemStack(self.itemName):get_stack_max()
-		end
 		if removeCount > self.count then
 			removeCount = self.count
 		end
@@ -268,6 +270,10 @@ core.register_entity("drawers:visual", {
 
 		-- return the stack that was removed from the drawer
 		return stack
+	end,
+
+	take_stack = function(self)
+		return self:take_items(ItemStack(self.itemName):get_stack_max())
 	end,
 
 	try_insert_stack = function(self, itemstack, insert_stack)
@@ -434,7 +440,7 @@ core.register_lbm({
 		-- count the drawer visuals
 		local drawerType = core.registered_nodes[node.name].groups.drawer
 		local foundVisuals = 0
-		local objs = core.get_objects_inside_radius(pos, 0.54)
+		local objs = core.get_objects_inside_radius(pos, 0.56)
 		if objs then
 			for _, obj in pairs(objs) do
 				if obj and obj:get_luaentity() and

@@ -8,94 +8,94 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-06 00:47+0200\n"
-"PO-Revision-Date: 2018-12-09 11:08+0000\n"
-"Last-Translator: monolifed <monolifed@gmail.com>\n"
-"Language-Team: Turkish <https://hosted.weblate.org/projects/minetest/mod-"
-"storage-drawers/tr/>\n"
-"Language: tr\n"
+"PO-Revision-Date: 2020-03-28 17:09+0000\n"
+"Last-Translator: Tirifto <tirifto@posteo.cz>\n"
+"Language-Team: Esperanto <https://hosted.weblate.org/projects/minetest/mod-"
+"storage-drawers/eo/>\n"
+"Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.4-dev\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #: init.lua lua/api.lua
 msgid "Wooden"
-msgstr "Ahşap"
+msgstr "Ligna"
 
 #: init.lua
 msgid "Acacia Wood"
-msgstr "Akasya Ahşap"
+msgstr "Akacia ligno"
 
 #: init.lua
 msgid "Aspen Wood"
-msgstr "Kavak Ahşap"
+msgstr "Tremola ligno"
 
 #: init.lua
 msgid "Junglewood"
-msgstr "Cangıl Ahşap"
+msgstr "Ĝangala ligno"
 
 #: init.lua
 msgid "Pine Wood"
-msgstr "Çam Ahşap"
+msgstr "Abia ligno"
 
 #: init.lua
 msgid "Oak Wood"
-msgstr "Meşe Ahşap"
+msgstr "Kverka ligno"
 
 #: init.lua
 msgid "Birch Wood"
-msgstr "Huş Ahşap"
+msgstr "Betula ligno"
 
 #: init.lua
 msgid "Dark Oak Wood"
-msgstr "Koyu Meşe Ahşap"
+msgstr "Malhela kverka ligno"
 
 #: init.lua
 msgid "Spruce Wood"
-msgstr "Ladin Ahşap"
+msgstr "Picea ligno"
 
 #: init.lua
 msgid "Steel Drawer Upgrade (x2)"
-msgstr "Çelik Çekmece Yükseltme (x2)"
+msgstr "Ŝtala plibonigo de tirkesto (×2)"
 
 #: init.lua
 msgid "Gold Drawer Upgrade (x3)"
-msgstr "Altın Çekmece Yükseltme (x3)"
+msgstr "Ora plibonigo de tirkesto (×3)"
 
 #: init.lua
 #, fuzzy
 msgid "Obsidian Drawer Upgrade (x4)"
-msgstr "Obsidyen Çekmece Yükseltme (x5)"
+msgstr "Obsidiana plibonigo de tirkesto (×5)"
 
 #: init.lua
 msgid "Diamond Drawer Upgrade (x8)"
-msgstr "Elmas Çekmece Yükseltme (x8)"
+msgstr "Diamanta plibonigo de tirkesto (×8)"
 
 #: init.lua
 msgid "Iron Drawer Upgrade (x2)"
-msgstr "Demir Çekmece Yükseltme (x2)"
+msgstr "Fera plibonigo de tirkesto (×2)"
 
 #: init.lua
 msgid "Emerald Drawer Upgrade (x13)"
-msgstr "Zümrüt Çekmece Yükseltme (x13)"
+msgstr "Smeralda plibonigo de tirkesto (×13)"
 
 #: init.lua
 #, fuzzy
 msgid "Mithril Drawer Upgrade (x13)"
-msgstr "Zümrüt Çekmece Yükseltme (x13)"
+msgstr "Smeralda plibonigo de tirkesto (×13)"
 
 #: init.lua
 msgid "Wooden Trim"
-msgstr "Ahşap Döşeme"
+msgstr ""
 
 #: init.lua
 msgid "Drawer Upgrade Template"
-msgstr "Çekmece Yükseltme Şablonu"
+msgstr "Ŝablono por plibonigo de tirkesto"
 
 #: lua/controller.lua
 msgid "Current State: "
-msgstr "Şu Anki Durum: "
+msgstr "Nuna stato: "
 
 #: lua/controller.lua
 msgid "Digiline Channel"
@@ -107,40 +107,40 @@ msgstr ""
 
 #: lua/controller.lua
 msgid "Stopped"
-msgstr "Durdu"
+msgstr "Haltinta"
 
 #: lua/controller.lua
 msgid "Running"
-msgstr "Çalışıyor"
+msgstr "Funkcianta"
 
 #: lua/controller.lua
 msgid "Jammed"
-msgstr "Sıkıştı"
+msgstr "Ŝtopita"
 
 #: lua/controller.lua
 msgid "Drawer Controller"
-msgstr "Çekmece Denetleyicisi"
+msgstr "Regilo de tirkesto"
 
 #: lua/api.lua lua/visual.lua
 msgid "Empty"
-msgstr "Boş"
+msgstr "Malplena"
 
 #: lua/api.lua
 msgid "@1 Drawer"
-msgstr "@1 Çekmece"
+msgstr "@1 tirkesto"
 
 #: lua/api.lua
 msgid "@1 Drawers (1x2)"
-msgstr "@1 Çekmece (1x2)"
+msgstr "@1 tirkestoj (1×2)"
 
 #: lua/api.lua
 msgid "@1 Drawers (2x2)"
-msgstr "@1 Çekmece (2x2)"
+msgstr "@1 tirkestoj (2×2)"
 
 #: lua/helpers.lua
 msgid "@1 (@2% full)"
-msgstr "@1 (%@2 dolu)"
+msgstr "@1 (plena je @2%)"
 
 #: lua/helpers.lua
 msgid "@1 @2 (@3% full)"
-msgstr "@1 @2 (%@3 dolu)"
+msgstr "@1 @2 (plena je @3%)"
