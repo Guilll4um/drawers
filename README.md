@@ -37,6 +37,7 @@ MineClone 2 mods are only optional dependencies for crafting recipes.
 - [x] Make drawers upgradable
 - [x] Add drawers in all wood types
 - [x] Make them digilines compatible
+- [x] Add swaping behavior for drawers slots items: AUX1+LBM to select , then  AUX1+RBM to swap or join 
 
 ## Bug reports and suggestions
 You can report bugs and suggest ideas on [GitHub](http://github.com/lnj2/drawers/issues/new),

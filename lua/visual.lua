@@ -161,6 +161,125 @@ core.register_entity("drawers:visual", {
 		-- used to check if we need to play a sound in the end
 		local inventoryChanged = false
 
+		--### addon swap stack ### begin
+		-- is want to swap the selection
+		local swaping = clicker:get_player_control().aux1
+		if swaping then
+			-- target info
+			local drawer_target_visualid = self.visualId
+			local drawer_target_pos = self.object:get_pos()
+			
+			-- retriview entity
+			local playermeta = clicker:get_meta()
+			
+			local drawer_selected_pos = core.deserialize(playermeta:get_string("drawer_selected_pos"))
+			if drawer_selected_pos == nil then return end
+			local drawer_selected_visualid = playermeta:get_string("drawer_selected_visualid")
+			if drawer_selected_visualid == nil then return end
+
+			-- local function too rollback transaction between drawers if cant swap totally the items (maxcount)
+			local rollback_if_not_totally_added = function(leftover, from,fromItemName,fromCount,to,toItemName,toCount)
+				if (leftover:get_count() > 0) then
+					from.count = fromCount
+					from.itemName = fromItemName
+					to.count = toCount
+					to.itemName = toItemName
+
+					from:updateInfotext()
+					from:updateTexture()
+					from:saveMetaData()
+
+					to:updateInfotext()
+					to:updateTexture()
+					to:saveMetaData()
+
+
+					core.sound_play("drawers_wrong", {
+						pos = self.object:get_pos(),
+						max_hear_distance = 6,
+						gain = 2.0
+					})
+					-- thanks to Heshl for the select sound
+					-- at  https://freesound.org/people/Heshl/sounds/269149/
+					-- under creative common licence https://creativecommons.org/licenses/by/3.0/
+					-- file not modified except the name
+					
+				end
+				return leftover:get_count() > 0
+			end
+
+			-- get data from selected to swap
+			local objs = core.get_objects_inside_radius(drawer_selected_pos, 0.56)
+			
+			if not objs then return end
+			for _, obj in pairs(objs) do
+				if obj and obj:get_luaentity() and obj:get_luaentity().name == "drawers:visual" then
+					if tostring(obj:get_luaentity().visualId) == tostring(drawer_selected_visualid)	then
+						--init selected entity var
+						local source = obj:get_luaentity()
+						local sourceCount = source.count
+						local sourceItemName = source.itemName
+						local sourcestack = ItemStack(sourceItemNamee)
+						sourcestack:set_count(sourceCount)
+
+						--init targeted entity var
+						local vid = self.visualId
+						local target = self
+						local targetCount = target.count
+						local targetItemName = target.itemName
+						local targetstack = ItemStack(targetItemName)
+						targetstack:set_count(targetCount)
+						
+						-- prevent double quantity if lmb then rmb clicked at the same visual 
+						if source == target then return end
+
+						-- remove item from target
+						target:take_items(targetCount)
+						-- remove item from selected
+						source:take_items(sourceCount)
+
+
+						-- add source item to target
+						local leftover = target:try_insert_stack( ItemStack(sourceItemName.." "..sourceCount), true)
+
+						-- if same item as source
+						if sourceItemName == targetItemName or sourceItemName == "" or targetItemName == "" then
+							if leftover:get_count() > 0 then
+								-- put back leftofer in the source 
+								source:try_insert_stack(leftover, true)
+							end
+
+							-- add target item to target  (join stack)
+							leftover = target:try_insert_stack(ItemStack(targetItemName.." "..targetCount), true)
+							
+							if leftover:get_count() > 0 then
+								-- put back leftofer in the source 
+								source:try_insert_stack(leftover, true)
+							end
+							--if rollback_if_not_totally_added(leftover,source,sourceItemName,sourceCount,target,targetItemName,targetCount) then return end
+						else
+							if rollback_if_not_totally_added(leftover,source,sourceItemName,sourceCount,target,targetItemName,targetCount) then return end
+
+							-- add target  item to selected
+							leftover = source:try_insert_stack(ItemStack(targetItemName.." "..targetCount), true)
+							if rollback_if_not_totally_added(leftover,source,sourceItemName,sourceCount,target,targetItemName,targetCount) then return end
+						end
+						self:play_interact_sound()
+						break
+					end
+				end
+			end
+			
+			-- reset selected entity data if swap is success
+			playermeta:set_string("drawer_selected_pos",nil)
+			playermeta:get_string("drawer_selected_visualid",nil)
+
+			return
+		end
+		--### addon swap stack ### end			
+			
+			
+			
 		-- When the player uses the drawer with their bare hand all
 		-- stacks from the inventory will be added to the drawer.
 		if self.itemName ~= "" and
@@ -219,6 +338,63 @@ core.register_entity("drawers:visual", {
 		   core.record_protection_violation(self.drawer_pos, puncher:get_player_name())
 		   return
 		end
+			
+--### addon swap stack ### begin
+		-- if player want to select a drawer visual entity with aux1 (ex: to swap)
+		local selecting = puncher:get_player_control().aux1
+		if selecting then
+			-- storing selected drawer to retriview it when needed
+			local pmeta = puncher:get_meta()
+			-- unselect previous if one
+			if pmeta:get_string("drawer_selected_visualid") ~= nil
+				and core.deserialize(pmeta:get_string("drawer_selected_pos")) ~= nil   then
+
+				local drawer_selected_pos = core.deserialize(pmeta:get_string("drawer_selected_pos"))
+				local drawer_selected_visualid = pmeta:get_string("drawer_selected_visualid")
+
+				--minetest.chat_send_all("there is a pervious one "..drawer_selected_pos)
+
+				-- récupératrion des infos de la selection
+				local objs = core.get_objects_inside_radius(drawer_selected_pos, 0.56)
+				for _, obj in pairs(objs) do
+					if obj and obj:get_luaentity() and obj:get_luaentity().name == "drawers:visual" then
+						if tostring(obj:get_luaentity().visualId) == tostring(drawer_selected_visualid)	then
+							--init selected entity var
+							local source = obj:get_luaentity()
+							source.texture = drawers.get_inv_image(source.itemName,false)
+							source.object:set_properties({
+								textures = {source.texture}
+							})
+							break
+						end
+					end
+				end
+			end
+
+			-- select drawer slot (entity)
+			pmeta:set_string("drawer_selected_visualid",self.visualId)
+			pmeta:set_string("drawer_selected_pos",core.serialize(self.drawer_pos))
+			self.texture = drawers.get_inv_image(self.itemName,true)
+			self.object:set_properties({
+				textures = {self.texture}
+			})
+			core.sound_play("drawers_select", {
+				pos = self.object:get_pos(),
+				max_hear_distance = 6,
+				gain = 2.0
+			})
+			-- thanks to LittleRobotSoundFactory for the select sound
+			-- at  https://freesound.org/people/LittleRobotSoundFactory/sounds/270401/
+			-- under creative common licence https://creativecommons.org/licenses/by/3.0/
+			-- file not modified except the name
+
+
+
+			return
+		end
+		--### addon swap stack ### end	
+			
+			
 		local inv = puncher:get_inventory()
 		if inv == nil then
 			return
