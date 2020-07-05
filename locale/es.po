@@ -5,157 +5,164 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2020-03-23 03:47+0000\n"
+"POT-Creation-Date: 2020-07-05 20:37+0200\n"
+"PO-Revision-Date: 2020-07-05 20:57+0200\n"
 "Last-Translator: anonymous <noreply@weblate.org>\n"
-"Language-Team: Spanish <https://hosted.weblate.org/projects/minetest/"
-"mod-storage-drawers/es/>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/minetest/mod-"
+"storage-drawers/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Poedit 2.3.1\n"
 
-#: lua/controller.lua
-msgid "Current State: "
-msgstr "Estado actual: "
-
-#: lua/controller.lua
-msgid "Stopped"
-msgstr "Detenido"
-
-#: lua/controller.lua
-msgid "Running"
-msgstr "Ejecutándose"
-
-#: lua/controller.lua
-msgid "Jammed"
-msgstr "Atascado"
-
-#: lua/controller.lua
-msgid "Drawer Controller"
-msgstr "Controlador de Gavetas"
-
-#: lua/visual.lua lua/api.lua
-msgid "Empty"
-msgstr "Vacío"
-
-#: lua/api.lua init.lua
+#: init.lua:84 init.lua:246 lua/api.lua:237
 msgid "Wooden"
 msgstr "De Madera"
 
-#: init.lua
+#: init.lua:97 init.lua:165
 msgid "Acacia Wood"
 msgstr "Madera de acacia"
 
-#: init.lua
+#: init.lua:110
 msgid "Aspen Wood"
 msgstr "Madera de álamo"
 
-#: init.lua
+#: init.lua:123 init.lua:210
 msgid "Junglewood"
 msgstr "Madera tropical"
 
-#: init.lua
+#: init.lua:136
 msgid "Pine Wood"
 msgstr "Madera de pino"
 
-#: init.lua
+#: init.lua:150
 msgid "Oak Wood"
 msgstr "Madera de roble"
 
-#: init.lua
+#: init.lua:180
 msgid "Birch Wood"
 msgstr "Madera de abedul"
 
-#: init.lua
+#: init.lua:195
 msgid "Dark Oak Wood"
 msgstr "Madera de roble oscuro"
 
-#: init.lua
+#: init.lua:225
 msgid "Spruce Wood"
 msgstr "Madera de pícea"
 
-#: init.lua
+#: init.lua:267
 msgid "Steel Drawer Upgrade (x2)"
 msgstr "Mejora para Gavetas de Acero (x2)"
 
-#: init.lua
+#: init.lua:274 init.lua:302
 msgid "Gold Drawer Upgrade (x3)"
 msgstr "Mejora para Gavetas de Oro (x3)"
 
-#: init.lua
-msgid "Obsidian Drawer Upgrade (x5)"
+#: init.lua:281 init.lua:309
+msgid "Obsidian Drawer Upgrade (x4)"
 msgstr "Mejora para Gavetas de Obsidiana (x5)"
 
-#: init.lua
+#: init.lua:288 init.lua:316
 msgid "Diamond Drawer Upgrade (x8)"
 msgstr "Mejora para Gavetas de Diamante (x8)"
 
-#: init.lua
+#: init.lua:295
 msgid "Iron Drawer Upgrade (x2)"
 msgstr "Mejora para Gavetas de Hierro (x2)"
 
-#: init.lua
+#: init.lua:323
 msgid "Emerald Drawer Upgrade (x13)"
 msgstr "Mejora para Gavetas de Esmeralda (x13)"
 
-#: init.lua
-#, fuzzy
+#: init.lua:332
 msgid "Mithril Drawer Upgrade (x13)"
-msgstr "@1 Gavetas (1x2)"
+msgstr "Mejora  para Gavetas de mitril (x13)"
 
-#: init.lua
-#, fuzzy
+#: init.lua:345 init.lua:353
 msgid "Wooden Trim"
-msgstr "De Madera"
+msgstr "Moldura de madera"
 
-#: init.lua
+#: init.lua:373
 msgid "Drawer Upgrade Template"
-msgstr ""
+msgstr "Plantilla de actualización para Gavetas"
 
-#: lua/controller.lua
-msgid "Current State: "
-msgstr "Estado actual: "
-
-#: lua/controller.lua
-msgid "Stopped"
-msgstr "Detenido"
-
-#: lua/controller.lua
-msgid "Running"
-msgstr "Ejecutándose"
-
-#: lua/controller.lua
-msgid "Jammed"
-msgstr "Atascado"
-
-#: lua/controller.lua
-msgid "Drawer Controller"
-msgstr "Controlador de gaveta"
-
-#: lua/api.lua lua/visual.lua
+#: lua/api.lua:70 lua/visual.lua:640
 msgid "Empty"
 msgstr "Vacío"
 
-#: lua/api.lua
+#: lua/api.lua:279
 msgid "@1 Drawer"
 msgstr "@1 Gaveta"
 
-#: lua/api.lua
+#: lua/api.lua:292
 msgid "@1 Drawers (1x2)"
 msgstr "@1 Gavetas (1x2)"
 
-#: lua/api.lua
+#: lua/api.lua:304
 msgid "@1 Drawers (2x2)"
 msgstr "@1 Gavetas (2x2)"
 
-#: lua/helpers.lua
+#: lua/controller.lua:58
+msgid "Current State: "
+msgstr "Estado actual: "
+
+#: lua/controller.lua:67
+msgid "Digiline Channel"
+msgstr "Canal Digiline"
+
+#: lua/controller.lua:68
+msgid "Save"
+msgstr "Salvar"
+
+#: lua/controller.lua:298 lua/controller.lua:330
+msgid "Stopped"
+msgstr "Detenido"
+
+#: lua/controller.lua:313 lua/controller.lua:321 lua/controller.lua:368
+#: lua/controller.lua:394 lua/controller.lua:425
+msgid "Running"
+msgstr "Ejecutándose"
+
+#: lua/controller.lua:372 lua/controller.lua:399 lua/controller.lua:405
+msgid "Jammed"
+msgstr "Atascado"
+
+#: lua/controller.lua:502
+msgid "Drawer Controller"
+msgstr "Controlador de Gavetas"
+
+#: lua/helpers.lua:48
 msgid "@1 (@2% full)"
 msgstr "@1 (@2% lleno)"
 
-#: lua/helpers.lua
+#: lua/helpers.lua:50
 msgid "@1 @2 (@3% full)"
 msgstr "@1 @2 (@3% lleno)"
+
+#: trolley/trolley.lua:103
+#, lua-format
+msgid "%s with items"
+msgstr "%s con elementos"
+
+#: trolley/trolley.lua:132
+msgid "You've already picked up a drawer. Put it down before!"
+msgstr "Ya tomaste un gavetas . ¡Bájalo antes!"
+
+#: trolley/trolley.lua:143
+#, lua-format
+msgid "You've already picked up a drawer in your %s. Put it down before!"
+msgstr "Ya tomaste un gavetas en tu %s. ¡Bájalo antes!"
+
+#: trolley/trolley.lua:192
+msgid "Trolley"
+msgstr "Trole"
+
+#: trolley/trolley.lua:236
+#, lua-format
+msgid "%s is protected by %s."
+msgstr ""

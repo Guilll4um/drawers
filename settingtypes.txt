@@ -1,1 +1,7 @@
 drawers_controller_interval (Drawer Controller update interval in seconds) float 1.0 0.1 10.0
+drawers_hold_unstackable_enabled (Drawer can hold unstackable items) bool true
+drawers_trolley_activated (Activate the drawer trolley) bool true
+drawers_trolley_craftable (Activate the drawer trolley recipe) bool false
+darwers_trolley_saturation_consumption (Drawer carrying stamina consumption - at take and at put ) float 0.75 0 9
+drawers_trolley_one_drawers_with_items_in_player_inv (Limit to one drawer with items in player inventory) bool true
+drawers_trolley_times_used_before_break ( Times you can use the trolley before it breaks - 0 = infinite) int 40 0 65535

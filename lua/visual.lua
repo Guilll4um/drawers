@@ -27,6 +27,8 @@ SOFTWARE.
 -- Load support for intllib.
 local MP = core.get_modpath(core.get_current_modname())
 local S, NS = dofile(MP.."/intllib.lua")
+local unstackable_enabled =  core.settings:get_bool("drawers_hold_unstackable_enabled",true)
+
 
 core.register_entity("drawers:visual", {
 	initial_properties = {
@@ -136,7 +138,8 @@ core.register_entity("drawers:visual", {
 		self.maxCount = self.meta:get_int("max_count"..vid)
 		self.itemStackMax = self.meta:get_int("base_stack_max"..vid)
 		self.stackMaxFactor = self.meta:get_int("stack_max_factor"..vid)
-
+		self.metaItemStack = self.meta:get_string("meta_itemstack"..vid)
+		self.itemStackWear = self.meta:get_int("itemstack_wear"..vid)
 
 		-- infotext
 		local infotext = self.meta:get_string("entity_infotext"..vid) .. "\n\n\n\n\n"
@@ -171,7 +174,7 @@ core.register_entity("drawers:visual", {
 			
 			-- retriview entity
 			local playermeta = clicker:get_meta()
-			
+			-- if nothing select then abort
 			local drawer_selected_pos = core.deserialize(playermeta:get_string("drawer_selected_pos"))
 			if drawer_selected_pos == nil then return end
 			local drawer_selected_visualid = playermeta:get_string("drawer_selected_visualid")
@@ -193,11 +196,10 @@ core.register_entity("drawers:visual", {
 					to:updateTexture()
 					to:saveMetaData()
 
-
 					core.sound_play("drawers_wrong", {
 						pos = self.object:get_pos(),
 						max_hear_distance = 6,
-						gain = 2.0
+						gain = 0.2
 					})
 					-- thanks to Heshl for the select sound
 					-- at  https://freesound.org/people/Heshl/sounds/269149/
@@ -216,20 +218,73 @@ core.register_entity("drawers:visual", {
 				if obj and obj:get_luaentity() and obj:get_luaentity().name == "drawers:visual" then
 					if tostring(obj:get_luaentity().visualId) == tostring(drawer_selected_visualid)	then
 						--init selected entity var
+
 						local source = obj:get_luaentity()
 						local sourceCount = source.count
 						local sourceItemName = source.itemName
-						local sourcestack = ItemStack(sourceItemNamee)
+						local sourcestack = ItemStack(sourceItemName)
+
 						sourcestack:set_count(sourceCount)
+						sourcestack:set_wear(source.itemStackWear)
+
+						-- set stack meta
+						local metalist =  minetest.deserialize(source.metaItemStack)
+						local meta_itemstack = sourcestack:get_meta()
+						local meta_type
+						if metalist ~= nil then
+							for key, value in pairs(metalist["fields"]) do
+								meta_type = type(value)
+								if meta_type == "number" then
+									if string.find(tostring(value), "^[-+]?[0-9]*\\.?[0-9]+$") ~= nil then  -- float
+										meta_itemstack:set_float(key, value)
+									else
+										meta_itemstack:set_int(key,value)
+									end
+								elseif meta_type == "string"  then
+									meta_itemstack:set_string(key,value)
+								elseif meta_type == "table"  then
+									meta_itemstack:set_string(key,minetest.serialize(value)) -- table store as string
+								end
+							end
+						end
+						meta_type = nil
+						metalist = nil
+
 
 						--init targeted entity var
 						local vid = self.visualId
 						local target = self
 						local targetCount = target.count
 						local targetItemName = target.itemName
+
 						local targetstack = ItemStack(targetItemName)
 						targetstack:set_count(targetCount)
-						
+						targetstack:set_wear(target.itemStackWear)
+
+						-- set stack meta
+						metalist =  minetest.deserialize(target.metaItemStack)
+						local meta_itemstack2 = targetstack:get_meta()
+						local meta_type
+						if metalist ~= nil then
+							for key, value in pairs(metalist["fields"]) do
+								meta_type = type(value)
+								if meta_type == "number" then
+									if string.find(tostring(value), "^[-+]?[0-9]*\\.?[0-9]+$") ~= nil then  -- float
+										meta_itemstack2:set_float(key, value)
+									else
+										meta_itemstack2:set_int(key,value)
+									end
+								elseif meta_type == "string"  then
+									meta_itemstack2:set_string(key,value)
+								elseif meta_type == "table"  then
+									meta_itemstack2:set_string(key,minetest.serialize(value)) -- table store as string
+								end
+							end
+						end
+						meta_type = nil
+						metalist = nil
+
+
 						-- prevent double quantity if lmb then rmb clicked at the same visual 
 						if source == target then return end
 
@@ -239,29 +294,28 @@ core.register_entity("drawers:visual", {
 						source:take_items(sourceCount)
 
 
-						-- add source item to target
-						local leftover = target:try_insert_stack( ItemStack(sourceItemName.." "..sourceCount), true)
+						-- add source item to target empty slot
+						local leftover = target:try_insert_stack(sourcestack , true)
 
-						-- if same item as source
-						if sourceItemName == targetItemName or sourceItemName == "" or targetItemName == "" then
+						-- if same item as source then join the 2 stack in 1
+						if (sourceItemName == targetItemName  and   source.metaItemStack == target.metaItemStack and source.itemStackWear  == target.itemStackWear          ) or sourceItemName == "" or targetItemName == "" then
 							if leftover:get_count() > 0 then
 								-- put back leftofer in the source 
 								source:try_insert_stack(leftover, true)
 							end
 
-							-- add target item to target  (join stack)
-							leftover = target:try_insert_stack(ItemStack(targetItemName.." "..targetCount), true)
+							-- add target item back to target slot filled with source item (join stack)
+							leftover = target:try_insert_stack(targetstack, true)
 							
 							if leftover:get_count() > 0 then
 								-- put back leftofer in the source 
 								source:try_insert_stack(leftover, true)
 							end
-							--if rollback_if_not_totally_added(leftover,source,sourceItemName,sourceCount,target,targetItemName,targetCount) then return end
 						else
 							if rollback_if_not_totally_added(leftover,source,sourceItemName,sourceCount,target,targetItemName,targetCount) then return end
 
-							-- add target  item to selected
-							leftover = source:try_insert_stack(ItemStack(targetItemName.." "..targetCount), true)
+							-- add target  item to empty selected slot
+							leftover = source:try_insert_stack(targetstack, true)
 							if rollback_if_not_totally_added(leftover,source,sourceItemName,sourceCount,target,targetItemName,targetCount) then return end
 						end
 						self:play_interact_sound()
@@ -272,7 +326,7 @@ core.register_entity("drawers:visual", {
 			
 			-- reset selected entity data if swap is success
 			playermeta:set_string("drawer_selected_pos",nil)
-			playermeta:get_string("drawer_selected_visualid",nil)
+			playermeta:set_string("drawer_selected_visualid",nil)
 
 			return
 		end
@@ -339,20 +393,20 @@ core.register_entity("drawers:visual", {
 		   return
 		end
 			
---### addon swap stack ### begin
+		--### addon swap stack ### begin
 		-- if player want to select a drawer visual entity with aux1 (ex: to swap)
-		local selecting = puncher:get_player_control().aux1
+		local playercontrol = puncher:get_player_control()
+		add_stack = not playercontrol.sneak and not playercontrol.aux1     --  /!\ add_stack override
+		local selecting = playercontrol.aux1 and not playercontrol.sneak
+
+		local pmeta = puncher:get_meta()
 		if selecting then
-			-- storing selected drawer to retriview it when needed
-			local pmeta = puncher:get_meta()
 			-- unselect previous if one
 			if pmeta:get_string("drawer_selected_visualid") ~= nil
 				and core.deserialize(pmeta:get_string("drawer_selected_pos")) ~= nil   then
 
 				local drawer_selected_pos = core.deserialize(pmeta:get_string("drawer_selected_pos"))
 				local drawer_selected_visualid = pmeta:get_string("drawer_selected_visualid")
-
-				--minetest.chat_send_all("there is a pervious one "..drawer_selected_pos)
 
 				-- récupératrion des infos de la selection
 				local objs = core.get_objects_inside_radius(drawer_selected_pos, 0.56)
@@ -361,7 +415,7 @@ core.register_entity("drawers:visual", {
 						if tostring(obj:get_luaentity().visualId) == tostring(drawer_selected_visualid)	then
 							--init selected entity var
 							local source = obj:get_luaentity()
-							source.texture = drawers.get_inv_image(source.itemName,false)
+							source.texture = drawers.get_inv_image(source.itemName,false) -- reset normal texture (with false param)
 							source.object:set_properties({
 								textures = {source.texture}
 							})
@@ -369,9 +423,22 @@ core.register_entity("drawers:visual", {
 						end
 					end
 				end
+
+				-- if  re-clicking on already seleted slot then after reset texture to normal one (unselecting), we abort
+				if core.serialize(drawer_selected_pos) == core.serialize(self.drawer_pos) and drawer_selected_visualid == self.visualId then 
+					pmeta:set_string("drawer_selected_visualid",nil)
+					pmeta:set_string("drawer_selected_pos",nil)
+					core.sound_play("drawers_select", {
+						pos = self.object:get_pos(),
+						max_hear_distance = 6,
+						gain = 0.2
+					})
+					return 
+				end
 			end
 
 			-- select drawer slot (entity)
+			-- storing selected drawer to retriview it when needed
 			pmeta:set_string("drawer_selected_visualid",self.visualId)
 			pmeta:set_string("drawer_selected_pos",core.serialize(self.drawer_pos))
 			self.texture = drawers.get_inv_image(self.itemName,true)
@@ -381,20 +448,26 @@ core.register_entity("drawers:visual", {
 			core.sound_play("drawers_select", {
 				pos = self.object:get_pos(),
 				max_hear_distance = 6,
-				gain = 2.0
+				gain = 0.2
 			})
 			-- thanks to LittleRobotSoundFactory for the select sound
 			-- at  https://freesound.org/people/LittleRobotSoundFactory/sounds/270401/
 			-- under creative common licence https://creativecommons.org/licenses/by/3.0/
 			-- file not modified except the name
 
-
-
 			return
 		end
+
+		-- if not swaping : reset of selected visual
+		pmeta:set_string("drawer_selected_pos",nil)
+		pmeta:set_string("drawer_selected_visualid",nil)
+		pmeta = nil
 		--### addon swap stack ### end	
 			
-			
+
+		local is_fullfilling = playercontrol.aux1 and playercontrol.sneak
+		if is_fullfilling then add_stack = true end
+
 		local inv = puncher:get_inventory()
 		if inv == nil then
 			return
@@ -403,24 +476,30 @@ core.register_entity("drawers:visual", {
 		if add_stack then
 			spaceChecker:set_count(spaceChecker:get_stack_max())
 		end
-		if not inv:room_for_item("main", spaceChecker) then
-			return
-		end
 
-		local stack
-		if add_stack then
-			stack = self:take_stack()
-		else
-			stack = self:take_items(1)
-		end
+		repeat 
 
-		if stack ~= nil then
-			-- add removed stack to player's inventory
-			inv:add_item("main", stack)
+			if not inv:room_for_item("main", spaceChecker) then
+				return
+			end
 
-			-- play the interact sound
-			self:play_interact_sound()
-		end
+			local stack
+			if add_stack then
+				stack = self:take_stack()
+			else
+				stack = self:take_items(1)
+			end
+
+			if stack ~= nil then
+				-- add removed stack to player's inventory
+				inv:add_item("main", stack)
+
+				-- play the interact sound
+				self:play_interact_sound()
+			end
+
+		until not is_fullfilling or stack == nil
+
 	end,
 
 	take_items = function(self, removeCount)
@@ -436,6 +515,32 @@ core.register_entity("drawers:visual", {
 
 		local stack = ItemStack(self.itemName)
 		stack:set_count(removeCount)
+
+		-- set stack wear
+		stack:set_wear(self.itemStackWear)
+
+		-- set stack meta
+		local metalist =  minetest.deserialize(self.metaItemStack)
+		local meta_itemstack = stack:get_meta()
+		local meta_type
+		if metalist ~= nil then
+			for key, value in pairs(metalist["fields"]) do
+				meta_type = type(value)
+				if meta_type == "number" then
+					if string.find(tostring(value), "^[-+]?[0-9]*\\.?[0-9]+$") ~= nil then  -- float
+						meta_itemstack:set_float(key, value)
+					else
+						meta_itemstack:set_int(key,value)
+					end
+				elseif meta_type == "string"  then
+					meta_itemstack:set_string(key,value)
+				elseif meta_type == "table"  then
+					meta_itemstack:set_string(key,minetest.serialize(value)) -- table store as string
+				end
+			end
+		end
+		meta_type = nil
+		metalist = nil
 
 		-- update the drawer count
 		self.count = self.count - removeCount
@@ -466,23 +571,39 @@ core.register_entity("drawers:visual", {
 			stackCount = 1
 		end
 
+		-- set wear (for tools)
+		local itemStackWear = itemstack:get_wear()
+
+		-- set item stack meta
+		local metaItemStack_table = itemstack:get_meta():to_table()
+
+		local metaItemStack = ""
+		if next(metaItemStack_table["fields"]) ~= nil then
+			metaItemStack = minetest.serialize(metaItemStack_table)
+		 end
+
 		-- if current itemstring is not empty
 		if self.itemName ~= "" then
-			-- check if same item
-			if stackName ~= self.itemName then return itemstack end
+			-- check if same item (with same meta and same wear )
+			if stackName ~= self.itemName or self.metaItemStack ~= metaItemStack or self.itemStackWear ~= itemStackWear  then return itemstack end
 		else -- is empty
 			self.itemName = stackName
 			self.count = 0
+
+			self.metaItemStack = metaItemStack
+			self.itemStackWear = itemStackWear
 
 			-- get new stack max
 			self.itemStackMax = ItemStack(self.itemName):get_stack_max()
 			self.maxCount = self.itemStackMax * self.stackMaxFactor
 		end
 
-		-- Don't add items stackable only to 1
-		if self.itemStackMax == 1 then
-			self.itemName = ""
-			return itemstack
+		if not unstackable_enabled then
+		-- Don't add items stackable only to 1 
+			if self.itemStackMax == 1 then
+				self.itemName = ""
+				return itemstack
+			end
 		end
 
 		-- set new counts:
@@ -599,6 +720,8 @@ core.register_entity("drawers:visual", {
 		self.meta:set_int("max_count"..self.visualId, self.maxCount)
 		self.meta:set_int("base_stack_max"..self.visualId, self.itemStackMax)
 		self.meta:set_int("stack_max_factor"..self.visualId, self.stackMaxFactor)
+		self.meta:set_string("meta_itemstack"..self.visualId, self.metaItemStack)
+		self.meta:set_int("itemstack_wear"..self.visualId, self.itemStackWear)
 	end
 })
 
