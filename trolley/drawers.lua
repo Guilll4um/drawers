@@ -7,18 +7,18 @@ local INT, STRING, FLOAT, TABLE  =
 local to_register = { }
 
 if core.get_modpath("default") and default then
-	to_register = {"drawers:wood"
-    ,"drawers:acacia_wood"
-	,"drawers:aspen_wood"
-	,"drawers:junglewood"
-	,"drawers:pine_wood" }
+	to_register = {"drawers:wood",
+    "drawers:acacia_wood",
+	"drawers:aspen_wood",
+	"drawers:junglewood",
+	"drawers:pine_wood" }
 elseif core.get_modpath("mcl_core") and mcl_core then
-	to_register = {"drawers:oakwood"
-	,"drawers:acaciawood"
-	,"drawers:birchwood"
-	,"drawers:darkwood"
-	,"drawers:junglewood"
-	,"drawers:sprucewood"}
+	to_register = {"drawers:oakwood",
+	"drawers:acaciawood",
+	"drawers:birchwood",
+	"drawers:darkwood",
+	"drawers:junglewood",
+	"drawers:sprucewood"}
 else
 	to_register = {"drawers:wood"}
 end
