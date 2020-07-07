@@ -325,7 +325,7 @@ local function controller_node_timer(pos, elapsed)
 		meta:set_float("times_ran_while_jammed", 0)
 		return true
 	end
-	
+
 	-- If a non stackable item is in the controller, such as a written book,
 	-- set the current_state to stopped because they are not allowed in drawers
 	if not unstackable_enabled and src:get_stack_max() == 1 then

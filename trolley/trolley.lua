@@ -73,7 +73,7 @@ local function restore(pos, placer, itemstack)
 	local wear = 65535
 	if (times_used_before_break > 0) then
 		-- retriview trolley wear
-		 wear = meta_itemstack:get_int("drawer_trolley_wear")
+		wear = meta_itemstack:get_int("drawer_trolley_wear")
 	end		
 
 	-- give back trolley with its wear 
