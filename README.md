@@ -11,13 +11,13 @@ front.
 
 * If you also hold the sneak-key only **a single item** will be removed/added. 
 
-* when left-clicking holding sneak + aux1 key you inventory will be full-filled
+* when left-clicking holding sneak + aux1(=special) key you inventory will be full-filled
   when right-clicking with your bare hand **all stacks** from the inventory will 
    be added to the drawer.
 
 * to **swap** item between drawers :
-	- left-clicking holding aux1 to select the slot to swap
-	- right-clicking holding aux1 to swap (or join if same item)
+	- left-clicking holding aux1(=special key) to select the slot to swap
+	- right-clicking holding aux1(=special key) to swap (or join if same item)
 
 * to **move** your drawers with items you can use the trolley !
 
@@ -56,11 +56,11 @@ MineClone 2 mods are only optional dependencies for crafting recipes.
 - [x] Make drawers upgradable
 - [x] Add drawers in all wood types
 - [x] Make them digilines compatible
-- [x] Add swaping behavior for drawers slots items: AUX1+LBM to select , 
-      then  AUX1+RBM to swap or join 
+- [x] Add swaping behavior for drawers slots items: AUX1(=special)+LBM to select , 
+      then  AUX1(=special)+RBM to swap or join 
 - [x] Add max_stack == 1 (with setting to allow or not) 
       and metadata item support (chest, tools, inventorybag) 
-- [x] Add a fullfill inventory shortcut on punch an item : SNEAK+AUX1+LBM
+- [x] Add a fullfill inventory shortcut on punch an item : SNEAK+AUX1(=special)+LBM
 - [x] Add trolley to carry drawers - with settings :
  	  activate, craftalbe, stamina consumption, limit to 1 in player invRef, wear
 
