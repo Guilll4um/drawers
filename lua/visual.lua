@@ -580,7 +580,7 @@ core.register_entity("drawers:visual", {
 		local metaItemStack = ""
 		if next(metaItemStack_table["fields"]) ~= nil then
 			metaItemStack = minetest.serialize(metaItemStack_table)
-		 end
+		end
 
 		-- if current itemstring is not empty
 		if self.itemName ~= "" then

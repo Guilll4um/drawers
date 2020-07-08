@@ -49,20 +49,20 @@ end
 for _, drawer_node_name in pairs(to_register) do
 	local type = "1"
 	if drawers.enable_1x1 and minetest.registered_nodes[drawer_node_name ..type] then
-		drawers:trolley_register_node(drawer_node_name..type,trolley_set_meta(table.copy(definition),"")) -- rergister darwer type 1
+		drawers:trolley_register_node(drawer_node_name..type,trolley_set_meta(table.copy(definition),"")) -- register darwer type 1
 	end
 	local def = table.copy(definition)
 	type = "2"
 	if drawers.enable_1x2 and minetest.registered_nodes[drawer_node_name .. type] then
 		def = trolley_set_meta(def,"1") -- start with darwer slot 1
-		def = trolley_set_meta(def,type) -- add drawer darwer slot 2
-		drawers:trolley_register_node(drawer_node_name..type,table.copy(def))    -- rergister darwer type 2
+		def = trolley_set_meta(def,type) -- add drawer slot 2
+		drawers:trolley_register_node(drawer_node_name..type,table.copy(def))    -- register darwer type 2
 	end
 	type = "3"
-	def = trolley_set_meta(def,type) -- add drawer darwer slot 3
+	def = trolley_set_meta(def,type) -- add darwer slot 3
 	type = "4"
 	if drawers.enable_2x2 and minetest.registered_nodes[drawer_node_name .. type] then
-		def = trolley_set_meta(def,type)  -- add drawer darwer slot 4
-		drawers:trolley_register_node(drawer_node_name..type,table.copy(def)) -- rergister darwer type 4
+		def = trolley_set_meta(def,type)  -- add drawer slot 4
+		drawers:trolley_register_node(drawer_node_name..type,table.copy(def)) -- register darwer type 4
 	end
 end

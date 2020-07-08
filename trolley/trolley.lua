@@ -174,7 +174,7 @@ if (only_one) then
 	minetest.register_allow_player_inventory_action(function(player, action, inventory, inventory_info) 
 		if action == "put" then
 			-- if inventory == player:get_inventory() then
-			if inventory_info.listname == "main"    then
+			if inventory_info.listname == "main" then
 				local is_to_check = false
 				if string.find(inventory_info.stack:get_name(), "drawers:trolley_picked_up_") then
 					is_to_check = true
@@ -286,7 +286,7 @@ minetest.register_tool("drawers:trolley", {
 		item_meta:set_string("data", minetest.serialize(metadata))
 		
 		minetest.remove_node(pos)
-	    if (times_used_before_break > 0) then
+		if (times_used_before_break > 0) then
 			itemstack:add_wear(65535 / times_used_before_break)
 			item_meta:set_int("drawer_trolley_wear",itemstack:get_wear())  -- saving item wear
 		end
