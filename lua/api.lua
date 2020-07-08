@@ -323,7 +323,7 @@ function drawers.register_drawer(name, def)
 		end
 		if drawers.enable_1x2 then
 			core.register_craft({
-				output = name .. "2 2",
+				output = name .. "2 1",
 				recipe = {
 					{def.material, drawers.CHEST_ITEMSTRING, def.material},
 					{def.material,       def.material,       def.material},
@@ -333,7 +333,7 @@ function drawers.register_drawer(name, def)
 		end
 		if drawers.enable_2x2 then
 			core.register_craft({
-				output = name .. "4 4",
+				output = name .. "4 1",
 				recipe = {
 					{drawers.CHEST_ITEMSTRING, def.material, drawers.CHEST_ITEMSTRING},
 					{      def.material,       def.material,       def.material      },

@@ -248,7 +248,8 @@ core.register_entity("drawers:visual", {
 	end,
 
 	take_items = function(self, removeCount)
-		local meta = core.get_meta(self.drawer_pos)
+		--local meta = core.get_meta(self.drawer_pos)
+		self:loadMetaData()
 
 		if self.count <= 0 then
 			return
@@ -277,6 +278,7 @@ core.register_entity("drawers:visual", {
 	end,
 
 	try_insert_stack = function(self, itemstack, insert_stack)
+		self:loadMetaData()
 		local stackCount = itemstack:get_count()
 		local stackName = itemstack:get_name()
 
@@ -400,6 +402,7 @@ core.register_entity("drawers:visual", {
 	end,
 
 	setStackMaxFactor = function(self, stackMaxFactor)
+		self:loadMetaData()
 		self.stackMaxFactor = stackMaxFactor
 		self.maxCount = self.stackMaxFactor * self.itemStackMax
 
@@ -417,13 +420,22 @@ core.register_entity("drawers:visual", {
 		})
 	end,
 
-	saveMetaData = function(self, meta)
+	saveMetaData = function(self)
 		self.meta:set_int("count"..self.visualId, self.count)
 		self.meta:set_string("name"..self.visualId, self.itemName)
 		self.meta:set_int("max_count"..self.visualId, self.maxCount)
 		self.meta:set_int("base_stack_max"..self.visualId, self.itemStackMax)
 		self.meta:set_int("stack_max_factor"..self.visualId, self.stackMaxFactor)
-	end
+	end,
+	
+	loadMetaData = function(self)
+		local vid = self.visualId
+		self.count = self.meta:get_int("count"..vid)
+		self.itemName = self.meta:get_string("name"..vid)
+		self.maxCount = self.meta:get_int("max_count"..vid)
+		self.itemStackMax = self.meta:get_int("base_stack_max"..vid)
+		self.stackMaxFactor = self.meta:get_int("stack_max_factor"..vid)
+	end,
 })
 
 core.register_lbm({
@@ -440,7 +452,7 @@ core.register_lbm({
 		-- count the drawer visuals
 		local drawerType = core.registered_nodes[node.name].groups.drawer
 		local foundVisuals = 0
-		local objs = core.get_objects_inside_radius(pos, 0.56)
+		local objs = core.get_objects_inside_radius(pos, 0.54)
 		if objs then
 			for _, obj in pairs(objs) do
 				if obj and obj:get_luaentity() and
