@@ -722,7 +722,7 @@ core.register_entity("drawers:visual", {
 		self.meta:set_int("stack_max_factor"..self.visualId, self.stackMaxFactor)
 		self.meta:set_string("meta_itemstack"..self.visualId, self.metaItemStack)
 		self.meta:set_int("itemstack_wear"..self.visualId, self.itemStackWear)
-	end
+	end,
 })
 
 core.register_lbm({
