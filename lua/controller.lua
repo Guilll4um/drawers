@@ -40,6 +40,9 @@ basis, not by a specific time/interval. Controllers that have no items will not
 continue scanning drawers. ]]--
 
 -- Load support for intllib.
+
+local unstackable_enabled =  core.settings:get_bool("drawers_hold_unstackable_enabled",true)
+
 local MP = core.get_modpath(core.get_current_modname())
 local S, NS = dofile(MP.."/intllib.lua")
 
@@ -325,7 +328,7 @@ local function controller_node_timer(pos, elapsed)
 
 	-- If a non stackable item is in the controller, such as a written book,
 	-- set the current_state to stopped because they are not allowed in drawers
-	if src:get_stack_max() == 1 then
+	if not unstackable_enabled and src:get_stack_max() == 1 then
 		meta:set_string("current_state", "stopped")
 		meta:set_string("formspec", controller_formspec(pos, S("Stopped")))
 		meta:set_string("jammed_item_name", src_name)

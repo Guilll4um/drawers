@@ -51,15 +51,24 @@ function drawers.gen_info_text(basename, count, factor, stack_max)
 	end
 end
 
-function drawers.get_inv_image(name)
-	local texture = "blank.png"
+function drawers.get_inv_image(name,isbrighten)
+	
+	isbrighten = isbrighten or false
+	local brighten =""
+	local brighten_ic = ""
+	if isbrighten then
+		brighten = "^[brighten"
+		brighten_ic = "&[brighten"
+	end
+	
+	local texture = "blank.png"..brighten
 	local def = core.registered_items[name]
 	if not def then return end
 
 	if def.inventory_image and #def.inventory_image > 0 then
-		texture = def.inventory_image
+		texture = def.inventory_image..brighten
 	else
-		if not def.tiles then return texture end
+		if not def.tiles then return texture..brighten end
 		local tiles = table.copy(def.tiles)
 
 		for k,v in pairs(tiles) do
@@ -71,11 +80,11 @@ function drawers.get_inv_image(name)
 		-- tiles: up, down, right, left, back, front
 		-- inventorycube: up, front, right
 		if #tiles <= 2 then
-			texture = core.inventorycube(tiles[1], tiles[1], tiles[1])
+			texture = core.inventorycube(tiles[1]..brighten_ic, tiles[1]..brighten_ic, tiles[1]..brighten_ic)
 		elseif #tiles <= 5 then
-			texture = core.inventorycube(tiles[1], tiles[3], tiles[3])
+			texture = core.inventorycube(tiles[1]..brighten_ic, tiles[3]..brighten_ic, tiles[3]..brighten_ic)
 		else -- full tileset
-			texture = core.inventorycube(tiles[1], tiles[6], tiles[3])
+			texture = core.inventorycube(tiles[1]..brighten_ic, tiles[6]..brighten_ic, tiles[3]..brighten_ic)
 		end
 	end
 

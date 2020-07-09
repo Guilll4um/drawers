@@ -24,6 +24,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ]]
 
+local trolley_activated = core.settings:get_bool("drawers_trolley_activated",true)
+
 -- Load support for intllib.
 local MP = core.get_modpath(core.get_current_modname())
 local S, NS = dofile(MP.."/intllib.lua")
@@ -380,3 +382,7 @@ core.register_craft({
 		{"group:stick", "group:stick", "group:stick"}
 	}
 })
+
+if trolley_activated then 
+	dofile(MP .. "/trolley/trolley.lua")
+end
