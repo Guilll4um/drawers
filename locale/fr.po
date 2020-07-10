@@ -5,158 +5,164 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-07 21:50+0100\n"
-"PO-Revision-Date: 2020-03-03 03:32+0000\n"
+"POT-Creation-Date: 2020-07-05 20:37+0200\n"
+"PO-Revision-Date: 2020-07-05 20:46+0200\n"
 "Last-Translator: Lucas Burlingham <lucas.burlingham@icloud.com>\n"
-"Language-Team: French <https://hosted.weblate.org/projects/minetest/"
-"mod-storage-drawers/fr/>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/minetest/mod-"
+"storage-drawers/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Poedit 2.3.1\n"
 
-#: lua/controller.lua
-msgid "Current State: "
-msgstr "État Actuel : "
-
-#: lua/controller.lua
-msgid "Stopped"
-msgstr "Arreté"
-
-#: lua/controller.lua
-msgid "Running"
-msgstr "En cours d'exécution"
-
-#: lua/controller.lua
-msgid "Jammed"
-msgstr "Bloqué"
-
-#: lua/controller.lua
-msgid "Drawer Controller"
-msgstr "Contrôleur de Tiroir"
-
-#: lua/visual.lua lua/api.lua
-msgid "Empty"
-msgstr "Vide"
-
-#: lua/api.lua init.lua
+#: init.lua:84 init.lua:246 lua/api.lua:237
 msgid "Wooden"
 msgstr "En bois"
 
-#: init.lua
+#: init.lua:97 init.lua:165
 msgid "Acacia Wood"
 msgstr "Bois d'acacia"
 
-#: init.lua
+#: init.lua:110
 msgid "Aspen Wood"
 msgstr "Bois de tremble"
 
-#: init.lua
+#: init.lua:123 init.lua:210
 msgid "Junglewood"
 msgstr "Bois de jungle"
 
-#: init.lua
+#: init.lua:136
 msgid "Pine Wood"
 msgstr "Bois de pin"
 
-#: init.lua
+#: init.lua:150
 msgid "Oak Wood"
 msgstr "Bois de chêne"
 
-#: init.lua
+#: init.lua:180
 msgid "Birch Wood"
 msgstr "Bois de bouleau"
 
-#: init.lua
+#: init.lua:195
 msgid "Dark Oak Wood"
 msgstr "Bois de chêne foncé"
 
-#: init.lua
+#: init.lua:225
 msgid "Spruce Wood"
 msgstr "Bois d'épicéa"
 
-#: init.lua
+#: init.lua:267
 msgid "Steel Drawer Upgrade (x2)"
 msgstr "Amélioration tiroir en acier (x2)"
 
-#: init.lua
+#: init.lua:274 init.lua:302
 msgid "Gold Drawer Upgrade (x3)"
 msgstr "Amélioration tiroir en or (x3)"
 
-#: init.lua
-#, fuzzy
+#: init.lua:281 init.lua:309
 msgid "Obsidian Drawer Upgrade (x4)"
 msgstr "Amélioration tiroir en obsidienne (x5)"
 
-#: init.lua
+#: init.lua:288 init.lua:316
 msgid "Diamond Drawer Upgrade (x8)"
 msgstr "Amélioration tiroir en diamant (x8)"
 
-#: init.lua
+#: init.lua:295
 msgid "Iron Drawer Upgrade (x2)"
 msgstr "Amélioration tiroir en fer (x2)"
 
-#: init.lua
+#: init.lua:323
 msgid "Emerald Drawer Upgrade (x13)"
 msgstr "Amélioration tiroir en émeraude (x13)"
 
-#: init.lua
-#, fuzzy
+#: init.lua:332
 msgid "Mithril Drawer Upgrade (x13)"
 msgstr "Amélioration tiroir en émeraude (x13)"
 
-#: init.lua
+#: init.lua:345 init.lua:353
 msgid "Wooden Trim"
 msgstr "Habillage en bois"
 
-#: init.lua
+#: init.lua:373
 msgid "Drawer Upgrade Template"
 msgstr "Amélioration modèle de tiroir"
 
-#: lua/controller.lua
-msgid "Current State: "
-msgstr "État Actuel : "
-
-#: lua/controller.lua
-msgid "Stopped"
-msgstr "Arreté"
-
-#: lua/controller.lua
-msgid "Running"
-msgstr "En cours d'exécution"
-
-#: lua/controller.lua
-msgid "Jammed"
-msgstr "Bloqué"
-
-#: lua/controller.lua
-msgid "Drawer Controller"
-msgstr "Contrôleur de Tiroirs"
-
-#: lua/api.lua lua/visual.lua
+#: lua/api.lua:70 lua/visual.lua:640
 msgid "Empty"
 msgstr "Vide"
 
-#: lua/api.lua
+#: lua/api.lua:279
 msgid "@1 Drawer"
 msgstr "Tiroir @1"
 
-#: lua/api.lua
+#: lua/api.lua:292
 msgid "@1 Drawers (1x2)"
 msgstr "Tiroirs (1x2) @1"
 
-#: lua/api.lua
+#: lua/api.lua:304
 msgid "@1 Drawers (2x2)"
 msgstr "Tiroirs (2x2) @1"
 
-#: lua/helpers.lua
+#: lua/controller.lua:58
+msgid "Current State: "
+msgstr "État Actuel "
+
+#: lua/controller.lua:67
+msgid "Digiline Channel"
+msgstr "Cannal digiline"
+
+#: lua/controller.lua:68
+msgid "Save"
+msgstr "Enregistrer"
+
+#: lua/controller.lua:298 lua/controller.lua:330
+msgid "Stopped"
+msgstr "Arreté"
+
+#: lua/controller.lua:313 lua/controller.lua:321 lua/controller.lua:368
+#: lua/controller.lua:394 lua/controller.lua:425
+msgid "Running"
+msgstr "En cours d'exécution"
+
+#: lua/controller.lua:372 lua/controller.lua:399 lua/controller.lua:405
+msgid "Jammed"
+msgstr "Bloqué"
+
+#: lua/controller.lua:502
+msgid "Drawer Controller"
+msgstr "Contrôleur de Tiroir"
+
+#: lua/helpers.lua:48
 msgid "@1 (@2% full)"
 msgstr "@1 (@2% plein)"
 
-#: lua/helpers.lua
+#: lua/helpers.lua:50
 msgid "@1 @2 (@3% full)"
 msgstr "@1 @2 (@3% plein)"
+
+#: trolley/trolley.lua:103
+#, lua-format
+msgid "%s with items"
+msgstr "%s avec des éléments"
+
+#: trolley/trolley.lua:132
+msgid "You've already picked up a drawer. Put it down before!"
+msgstr "Vous avez déjà ramassé un tiroir. Posez-le avant !"
+
+#: trolley/trolley.lua:143
+#, lua-format
+msgid "You've already picked up a drawer in your %s. Put it down before!"
+msgstr "Vous avez déjà ramassé un tiroir dans votre %s. Posez-le avant!"
+
+#: trolley/trolley.lua:192
+msgid "Trolley"
+msgstr "Chariot"
+
+#: trolley/trolley.lua:236
+#, lua-format
+msgid "%s is protected by %s."
+msgstr "%s est protégé par %s."

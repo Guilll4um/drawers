@@ -2,4 +2,8 @@ default?
 mcl_core?
 screwdriver?
 pipeworks?
+wrench?
+stamina?
 intllib?
+moreores?
+digilines?
