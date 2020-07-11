@@ -66,7 +66,15 @@ function drawers.get_inv_image(name,isbrighten)
 	if not def then return end
 
 	if def.inventory_image and #def.inventory_image > 0 then
-		texture = def.inventory_image..brighten
+		-- TODO : find an item that use table as inventory_image to test the bgighten befor uncomment
+		-- if isbrighten then
+		-- 	for i = 1, #def.inventory_image do
+		-- 		if def.inventory_image[i] ~= nil and type(def.inventory_image[i]) == "string" then
+		-- 			def.inventory_image[i] =  def.inventory_image[i]..brighten
+		-- 		end
+		-- 	end
+		-- end
+		texture = def.inventory_image
 	else
 		if not def.tiles then return texture..brighten end
 		local tiles = table.copy(def.tiles)
