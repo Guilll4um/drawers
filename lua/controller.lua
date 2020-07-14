@@ -250,15 +250,21 @@ local function controller_get_drawer_index(pos, itemstring)
 	-- the same as what is currently in the drawer or the drawer is full
 	elseif drawers_table_index[itemstring] then
 		local visualid = drawers_table_index[itemstring]["visualid"]
-		local indexed_drawer_meta = core.get_meta({
-			drawers_table_index[itemstring]["drawer_pos"]
-		})
-		local indexed_drawer_meta_name = indexed_drawer_meta:get_string("name" .. visualid)
-		local indexed_drawer_meta_count = indexed_drawer_meta:get_int("count" .. visualid)
-		local indexed_drawer_meta_max_count = indexed_drawer_meta:get_int("max_count" .. visualid)
-		if indexed_drawer_meta_name ~= itemstring or indexed_drawer_meta_count >= indexed_drawer_meta_max_count then
+		if not visualid then -- patch coz sometime visualid
+			meta:set_string("drawers_table_index", nil) -- reset drawer controller index
 			drawers_table_index = index_drawers(pos)
 			meta:set_string("drawers_table_index", core.serialize(drawers_table_index))
+		else
+			local indexed_drawer_meta = core.get_meta({
+				drawers_table_index[itemstring]["drawer_pos"]
+			})
+			local indexed_drawer_meta_name = indexed_drawer_meta:get_string("name" .. visualid)
+			local indexed_drawer_meta_count = indexed_drawer_meta:get_int("count" .. visualid)
+			local indexed_drawer_meta_max_count = indexed_drawer_meta:get_int("max_count" .. visualid)
+			if indexed_drawer_meta_name ~= itemstring or indexed_drawer_meta_count >= indexed_drawer_meta_max_count then
+				drawers_table_index = index_drawers(pos)
+				meta:set_string("drawers_table_index", core.serialize(drawers_table_index))
+			end
 		end
 	end
 
