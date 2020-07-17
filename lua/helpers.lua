@@ -112,7 +112,7 @@ function drawers.spawn_visuals(pos)
 		drawers.last_visual_id = ""
 		drawers.last_texture = drawers.get_inv_image(core.get_meta(pos):get_string("name"))
 
-		local bdir = core.facedir_to_dir(node.param2)
+		local bdir = vector.multiply(core.facedir_to_dir(node.param2),1.03) -- adding .03 to prevent z-fighting when x and z coordinates aer very big
 		local fdir = vector.new(-bdir.x, 0, -bdir.z)
 		local pos2 = vector.add(pos, vector.multiply(fdir, 0.45))
 
@@ -124,7 +124,7 @@ function drawers.spawn_visuals(pos)
 
 		drawers.last_texture = nil
 	elseif drawerType == 2 then
-		local bdir = core.facedir_to_dir(node.param2)
+		local bdir = vector.multiply(core.facedir_to_dir(node.param2),1.03) -- adding .03 to prevent z-fighting when x and z coordinates aer very big
 
 		local fdir1
 		local fdir2
